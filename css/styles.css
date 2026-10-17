@@ -1,0 +1,458 @@
+/* 
+    Copyright (C) 2026 Nightregion
+    This website's code is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License v3 as published by
+    the Free Software Foundation. View more info at https://www.gnu.org/licenses/gpl-3.0.en.html#license-text
+    
+    This license EXCLUDES the videos/ directory. https://savedeltarune.teaa.workers.dev/legal for more information
+*/
+
+@font-face {
+	font-family: UTDR;
+	src: url("utdr.otf");
+}
+
+body.theme-utdr, body {
+	background: #000000 !important;
+	color: #ffffff !important;
+	font-family: UTDR, monospace !important;
+	image-rendering: pixelated;
+	margin: 0;
+	padding: 20px;
+}
+
+img, video {
+	image-rendering: pixelated;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	color: #ffffff !important;
+	text-shadow: none !important;
+	font-weight: normal;
+}
+
+a {
+	color: #ffe700;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}
+
+.video-container, #box {
+	background: #000000 !important;
+	border: 6px solid #ffffff !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	color: #ffffff !important;
+	padding: 24px !important;
+	max-width: 900px;
+	margin: 0 auto;
+}
+
+.video-card {
+	background: #000000 !important;
+	border: 3px solid #ffffff !important;
+	padding: 16px;
+	margin-bottom: 20px;
+}
+
+.video-card video {
+	width: 100%;
+	border: 2px solid #ffffff;
+}
+
+.video-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+/*  */
+.video-card-compact {
+    display: flex;
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    padding: 14px;
+    gap: 18px;
+    align-items: center;
+}
+
+.video-preview-wrapper {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.video-card-compact video {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ffffff;
+    display: block;
+}
+
+.video-meta-info {
+    flex-grow: 1;
+    font-size: 10pt;
+}
+/*  */
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 4px 12px;
+    color: #cccccc;
+}
+
+.btn, input[type=button] {
+	display: inline-block;
+	background: #000000 !important;
+	color: #ffffff !important;
+	border: 3px solid #ffffff !important;
+	border-radius: 0 !important;
+	padding: 8px 20px !important;
+	margin: 16px auto !important;
+	box-shadow: none !important;
+	text-align: center;
+	font-family: UTDR, monospace !important;
+	font-size: 14pt !important;
+	cursor: pointer;
+}
+
+.btn:hover, input[type=button]:hover {
+	background: #ffffff !important;
+	color: #000000 !important;
+}
+
+input[type=text], .search-bar {
+	background: #000000 !important;
+	color: #ffffff !important;
+	border: 2px solid #ffffff !important;
+	border-radius: 0 !important;
+	box-shadow: none !important;
+	font-family: UTDR, monospace !important;
+	padding: 8px;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+
+/* new */
+/* MOBILE */
+#box {
+    max-width: 900px;
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.stats-bar {
+    background: #000000;
+    border: 2px solid #ffffff;
+    padding: 8px 12px;
+    margin-bottom: 16px;
+    font-size: 10pt;
+    color: #ffe700;
+}
+
+.controls-wrapper {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.controls-wrapper .search-bar {
+    flex: 1;
+    min-width: 200px;
+}
+
+.action-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.btn-action, .btn-download-single {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border: 2px solid #ffffff !important;
+    padding: 6px 12px;
+    font-family: UTDR, monospace !important;
+    font-size: 10pt;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.btn-action:hover, .btn-download-single:hover {
+    background: #ffffff !important;
+    color: #000000 !important;
+}
+
+.video-card-compact {
+    display: flex;
+    background: #000000 !important;
+    border: 2px solid #ffffff !important;
+    padding: 14px;
+    gap: 18px;
+    align-items: center;
+    transition: border-color 0.2s ease;
+}
+
+.video-preview-wrapper {
+    width: 300px;
+    flex-shrink: 0;
+}
+
+.video-card-compact video {
+    width: 100%;
+    height: auto;
+    border: 2px solid #ffffff;
+    display: block;
+}
+
+.video-meta-info {
+    flex-grow: 1;
+    font-size: 10pt;
+}
+
+.details-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+    gap: 4px 12px;
+    color: #cccccc;
+}
+
+/* MOBILE */
+@media (max-width: 650px) {
+    body {
+        padding: 10px;
+    }
+
+    .video-card-compact {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .video-preview-wrapper {
+        width: 100%;
+    }
+
+    .controls-wrapper {
+        flex-direction: column;
+    }
+
+    .action-btns {
+        width: 100%;
+    }
+
+    .btn-action {
+        flex: 1;
+        text-align: center;
+    }
+}
+
+.video-grid.grid-layout {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 16px;
+}
+
+.video-grid.grid-layout .video-card-compact {
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.video-grid.grid-layout .video-preview-wrapper {
+    width: 100%;
+}
+
+.btn-copy-link {
+    background: #000000 !important;
+    color: #ffe700 !important;
+    border: 2px solid #ffe700 !important;
+    padding: 4px 8px;
+    font-size: 9pt;
+    cursor: pointer;
+}
+
+.btn-copy-link:hover {
+    background: #ffe700 !important;
+    color: #000000 !important;
+}
+
+select#sortSelect {
+    outline: none;
+    background: #000000;
+    color: #ffffff;
+    border: 2px solid #ffffff;
+}
+
+select#sortSelect option {
+    background: #000000;
+    color: #ffffff;
+}
+
+/* save img */
+button.star-btn {
+    background: transparent !important;
+    background-color: transparent !important;
+    border: none !important;
+    outline: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+    cursor: pointer;
+}
+/* end */
+
+
+/*  */
+
+
+/* disclaimer shit */
+#disclaimerOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+.disclaimer-content {
+    max-width: 500px !important;
+}
+
+.disclaimer-content h2 {
+    margin-top: 0;
+    color: #ffe700 !important;
+    border-bottom: 2px solid #ffe700;
+    padding-bottom: 8px;
+}
+
+.disclaimer-content p {
+    font-size: 10pt;
+    line-height: 1.4;
+}
+
+.disclaimer-check-row {
+    margin: 15px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 9.5pt;
+}
+
+.disclaimer-check-row input,
+.disclaimer-check-row label {
+    cursor: pointer;
+}
+
+.disclaimer-action-row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.disclaimer-action-row button {
+    flex-grow: 1;
+}
+
+.disclaimer-action-row button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed !important;
+    background: #000000 !important;
+    color: #ffffff !important;
+}
+
+#disclaimerTimer {
+    color: #ffe700;
+    font-size: 10pt;
+    min-width: 130px;
+    text-align: right;
+}
+/* end disc */
+
+/* start anim img */
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+}
+
+.kaw-anim {
+    width: 160px; 
+    height: 160px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: kawSprite 0.8s steps(1) infinite;
+    flex-shrink: 0;
+}
+
+@keyframes kawSprite {
+    0% {
+        background-image: url('../img/kaw_sw1.png');
+    }
+    25% {
+        background-image: url('../img/kaw_sw2.png');
+    }
+    50% {
+        background-image: url('../img/kaw_sw3.png');
+    }
+    75% {
+        background-image: url('../img/kaw_sw2.png');
+    }
+}
+
+.legal-contact-card {
+    background: #111;
+    border: 2px solid #ffe700;
+    padding: 15px;
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.ral-anim {
+    width: 120px;
+    height: 120px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    animation: ralSprite 1.26s steps(1) infinite;
+    flex-shrink: 0;
+    margin-left: 15px;
+}
+
+@keyframes ralSprite {
+    0% {
+        background-image: url('../img/ral_let1.png');
+    }
+    50% {
+        background-image: url('../img/ral_let2.png');
+    }
+}
+/* end anim shit */
+
+
+
+
+
+
+
+/*  */
+/* For bg test */
+body.theme-utdr {
+	background-color: #000000;
+}
+
+#box, .video-container {
+	background-color: #000000 !important;
+}
+/*  */

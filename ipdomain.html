@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookup - IP & domain</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="theme-color" content="#000000">
+</head>
+<body class="theme-utdr">
+
+    <div id="box">
+        <div class="header-container">
+            <div>
+                <h1>Lookup - IP & Domain</h1>
+                <p id="subtitle"><a href="index.html" style="color: #ffe700;"><- Back to landing</a></p>
+                <p id="subtitle">Insert an IP address or domain name to get the information provided by IP-API</p>
+            </div>
+        </div>
+
+        <div class="controls-wrapper" style="margin-top: 20px;">
+            <input type="text" id="osintSearchInput" class="search-bar" placeholder="Enter IP address or domain (e.g. google.com)..">
+            <button id="osintSearchBtn" class="btn-action">Search</button>
+            <!-- i leaned in to the osint naming scheme and i cant change it i cba to its 1 am please forgive me lmao -->
+        </div>
+
+        <div id="resultContainer" style="margin-top: 20px;"></div>
+        <!-- stuff -->
+    </div>
+
+    <script src="js/rate_limiter.js"></script>
+    <script src="js/ipdomain_handler.js"></script>
+</body>
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookup - String utilities</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="theme-color" content="#000000">
+</head>
+<body class="theme-utdr">
+
+    <div id="box">
+        <div class="header-container">
+            <div>
+                <h1>Lookup - String Utilities</h1>
+                <p id="subtitle"><a href="index.html" style="color: #ffe700;"><- Back to landing</a></p>
+                <p id="subtitle">Encode, decode, convert cases, and analyze text locally</p>
+            </div>
+        </div>
+
+        <div class="controls-wrapper" style="flex-direction: column; gap: 15px; margin-top: 20px;">
+            <textarea id="stringInput" class="search-bar" rows="5" placeholder="Enter or paste your text here..." style="width: 100%; resize: vertical; font-family: monospace;"></textarea>
+            
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <button id="btnB64Enc" class="btn-action">Base64 encode</button>
+                <button id="btnB64Dec" class="btn-action">Base64 decode</button>
+                <button id="btnUrlEnc" class="btn-action">URL encode</button>
+                <button id="btnUrlDec" class="btn-action">URL decode</button>
+                <button id="btnUpper" class="btn-action">UPPERCASE</button>
+                <button id="btnLower" class="btn-action">lowercase</button>
+                <button id="btnReverse" class="btn-action">Reverse</button>
+            </div>
+        </div>
+
+        <div id="resultContainer" style="margin-top: 20px; display: none;">
+            <div class="video-card" style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0;">Output:</h3>
+                    <button id="copyOutputBtn" class="btn-action" style="font-size: 8pt; padding: 4px 10px;">Copy Text</button>
+                </div>
+                <textarea id="stringOutput" class="search-bar" rows="5" readonly style="width: 100%; resize: vertical; font-family: monospace; background: #111; color: #fff;"></textarea>
+                <div id="statsBar" style="font-size: 9pt; color: #aaa; display: flex; gap: 15px; flex-wrap: wrap; margin-top: 5px;"></div>
+            </div>
+        </div>
+
+        <p style="text-align: center; margin-top: 40px; font-size: 9pt; color: #888;">
+            All string and base64 operations run locally, if you're paranoid, of course.
+        </p>
+    </div>
+
+    <script src="js/string_util_handler.js"></script>
+</body>
+</html>
