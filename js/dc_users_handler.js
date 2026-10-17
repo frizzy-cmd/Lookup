@@ -25,7 +25,7 @@ if (dcSearchBtn) {
         dcContainer.innerHTML = '<p>Loading user\'s profile...</p>';
 
         try {
-            const res = await fetch(`/api/discord/user/${encodeURIComponent(query)}`);
+            const res = await fetch(`api/discord/user/${encodeURIComponent(query)}`);
             if (!res.ok) throw new Error('Failed to fetch discord user');
             
             const u = await res.json();
