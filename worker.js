@@ -21,22 +21,28 @@ async fetch(request, env, ctx) {
             if (/^\d+$/.test(query)) {
                 userId = query;
             } else {
-                const userLookupRes = await fetch(`https://users.roblox.com/v1/usernames/users`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ usernames: [query], excludeBannedUsers: false })
-                });
-                const userLookupData = await userLookupRes.json();
-                
-                if (userLookupData.data && userLookupData.data.length > 0) {
-                    userId = userLookupData.data[0].id;
-                } else {
-                    const searchRes = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(query)}&limit=1`);
-                    const searchData = await searchRes.json();
+                try {
+                    const userLookupRes = await fetch(`https://users.roblox.com/v1/usernames/users`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ usernames: [query], excludeBannedUsers: false })
+                    });
+                    const userLookupData = await userLookupRes.json();
                     
-                    if (searchData.data && searchData.data.length > 0) {
-                        userId = searchData.data[0].id;
+                    if (userLookupData.data && userLookupData.data.length > 0) {
+                        userId = userLookupData.data[0].id;
                     }
+                } catch (e) {}
+
+                if (!userId) {
+                    try {
+                        const searchRes = await fetch(`https://users.roblox.com/v1/users/search?keyword=${encodeURIComponent(query)}&limit=1`);
+                        const searchData = await searchRes.json();
+                        
+                        if (searchData.data && searchData.data.length > 0) {
+                            userId = searchData.data[0].id;
+                        }
+                    } catch (e) {}
                 }
             }
 
@@ -47,59 +53,63 @@ async fetch(request, env, ctx) {
                 });
             }
 
+            // hotfix safefetch.. pls work 1:56 am rn
+            const safeFetch = async (endpoint, options) => {
+                try {
+                    const res = await fetch(endpoint, options);
+                    if (!res.ok) return null;
+                    return await res.json();
+                } catch (err) {
+                    return null;
+                }
+            };
+
             const [
-                userRes, 
-                headshotRes, 
-                bustRes, 
-                fullRes, 
-                presenceRes, 
-                friendRes, 
-                followerRes, 
-                followingRes, 
-                groupsRes, 
-                historyRes,
-                favoritesRes,
-                shirtsRes,
-                hatsRes
+                userData, 
+                headshotData, 
+                bustData, 
+                fullData, 
+                presenceData, 
+                friendData, 
+                followerData, 
+                followingData, 
+                groupsData, 
+                historyData,
+                favoritesData,
+                shirtsData,
+                hatsData
             ] = await Promise.all([
-                fetch(`https://users.roblox.com/v1/users/${userId}`),
-                fetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
-                fetch(`https://thumbnails.roblox.com/v1/users/avatar-bust?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
-                fetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
-                fetch(`https://presence.roblox.com/v1/presence/users`, {
+                safeFetch(`https://users.roblox.com/v1/users/${userId}`),
+                safeFetch(`https://thumbnails.roblox.com/v1/users/avatar-headshot?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
+                safeFetch(`https://thumbnails.roblox.com/v1/users/avatar-bust?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
+                safeFetch(`https://thumbnails.roblox.com/v1/users/avatar?userIds=${userId}&size=420x420&format=Png&isCircular=false`),
+                safeFetch(`https://presence.roblox.com/v1/presence/users`, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ userIds: [Number(userId)] })
                 }),
-                fetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`),
-                fetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`),
-                fetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`),
-                fetch(`https://groups.roblox.com/v1/users/${userId}/groups/roles`),
-                fetch(`https://users.roblox.com/v1/users/${userId}/username-history`),
-                fetch(`https://games.roblox.com/v2/users/${userId}/favorite/games`),
-                fetch(`https://inventory.roblox.com/v2/users/${userId}/inventory/2?limit=25`), // shirts
-                fetch(`https://inventory.roblox.com/v2/users/${userId}/inventory/8?limit=25`)  // hats / accessories
+                safeFetch(`https://friends.roblox.com/v1/users/${userId}/friends/count`),
+                safeFetch(`https://friends.roblox.com/v1/users/${userId}/followers/count`),
+                safeFetch(`https://friends.roblox.com/v1/users/${userId}/followings/count`),
+                safeFetch(`https://groups.roblox.com/v1/users/${userId}/groups/roles`),
+                safeFetch(`https://users.roblox.com/v1/users/${userId}/username-history`),
+                safeFetch(`https://games.roblox.com/v2/users/${userId}/favorite/games`),
+                safeFetch(`https://inventory.roblox.com/v2/users/${userId}/inventory/2?limit=25`), // shirts
+                safeFetch(`https://inventory.roblox.com/v2/users/${userId}/inventory/8?limit=25`)  // hats / accessories
             ]);
 
-            const userData = userRes.ok ? await userRes.json() : {};
-            const headshotData = headshotRes.ok ? await headshotRes.json() : {};
-            const bustData = bustRes.ok ? await bustRes.json() : {};
-            const fullData = fullRes.ok ? await fullRes.json() : {};
-            const presenceData = presenceRes.ok ? await presenceRes.json() : {};
-            const friendData = friendRes.ok ? await friendRes.json() : {};
-            const followerData = followerRes.ok ? await followerRes.json() : {};
-            const followingData = followingRes.ok ? await followingRes.json() : {};
-            const groupsData = groupsRes.ok ? await groupsRes.json() : {};
-            const historyData = historyRes.ok ? await historyRes.json() : {};
-            const favoritesData = favoritesRes.ok ? await favoritesRes.json() : {};
-            const shirtsData = shirtsRes.ok ? await shirtsRes.json() : {};
-            const hatsData = hatsRes.ok ? await hatsRes.json() : {};
+            if (!userData) {
+                return new Response(JSON.stringify({ error: 'User profile not found on Roblox' }), {
+                    status: 404,
+                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+                });
+            }
 
-            const presence = presenceData.userPresences?.[0] || {};
+            const presence = presenceData?.userPresences?.[0] || {};
 
             const combinedInventory = [
-                ...(shirtsData.data || []).map(item => ({ ...item, category: 'Shirt' })),
-                ...(hatsData.data || []).map(item => ({ ...item, category: 'Hat/Accessory' }))
+                ...(shirtsData?.data || []).map(item => ({ ...item, category: 'Shirt' })),
+                ...(hatsData?.data || []).map(item => ({ ...item, category: 'Hat/Accessory' }))
             ];
 
             const payload = {
@@ -111,9 +121,9 @@ async fetch(request, env, ctx) {
                 isBanned: userData.isBanned || false,
                 hasVerifiedBadge: userData.hasVerifiedBadge || false,
                 avatars: {
-                    headshot: headshotData.data?.[0]?.imageUrl || '',
-                    bust: bustData.data?.[0]?.imageUrl || '',
-                    full: fullData.data?.[0]?.imageUrl || ''
+                    headshot: headshotData?.data?.[0]?.imageUrl || '',
+                    bust: bustData?.data?.[0]?.imageUrl || '',
+                    full: fullData?.data?.[0]?.imageUrl || ''
                 },
                 presence: {
                     userPresenceType: presence.userPresenceType || 0,
@@ -122,13 +132,13 @@ async fetch(request, env, ctx) {
                     gameId: presence.gameId || null
                 },
                 stats: {
-                    friends: friendData.count || 0,
-                    followers: followerData.count || 0,
-                    following: followingData.count || 0
+                    friends: friendData?.count || 0,
+                    followers: followerData?.count || 0,
+                    following: followingData?.count || 0
                 },
-                groups: groupsData.data || [],
-                usernameHistory: historyData.data || [],
-                favoriteGames: favoritesData.data || [],
+                groups: groupsData?.data || [],
+                usernameHistory: historyData?.data || [],
+                favoriteGames: favoritesData?.data || [],
                 inventory: combinedInventory
             };
 
@@ -181,7 +191,7 @@ async fetch(request, env, ctx) {
 
             const userData = await discordRes.json();
 
-            // format avatar url (supports animated gifs or default discord avatars)
+            // format avatar url
             let avatarUrl = `https://cdn.discordapp.com/embed/avatars/${Number(userData.discriminator || 0) % 5}.png`;
             if (userData.avatar) {
                 const ext = userData.avatar.startsWith('a_') ? 'gif' : 'png';
