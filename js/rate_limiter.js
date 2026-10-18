@@ -1,38 +1,21 @@
-function checkRateLimit() {
-    const now = Date.now();
-    let data = JSON.parse(localStorage.getItem('ratelimit_data') || '{"timestamps": [], "bannedUntil": 0}');
-
-    if (now < data.bannedUntil) {
-        alert('This IP has been blocked from requesting for 5 minutes, I told you to stop!');
-        return true;
-    }
-
-    data.timestamps = data.timestamps.filter(t => now - t < 10000);
-    data.timestamps.push(now);
-
-    const count = data.timestamps.length;
-
-    if (count === 3) {
-        localStorage.setItem('ratelimit_data', JSON.stringify(data));
-        return true; 
+const originalFetch = window.fetch;
+window.fetch = async function(...args) {
+    const res = await originalFetch.apply(this, args);
+    
+    if (typeof args[0] === 'string' && args[0].startsWith('/api/') && res.status === 429) {
+        const container = document.getElementById('resultContainer');
+        if (container) {
+            container.innerHTML = `
+                <div class="video-card" style="border: 2px solid #ff0000; padding: 15px; text-align: center;">
+                    <h3 style="margin: 0; color: #ff0000;">You are being rate limited. (429)</h3>
+                    <p style="font-size: 9.5pt; color: #aaa; margin-top: 8px;">Slow the hell down. I detected too many requests from your IP</p>
+                </div>
+            `;
+        }
     }
     
-    if (count === 10) {
-        alert('Stop before you get blocked for 5 minutes. I am warning you.');
-    }
-    
-    if (count >= 25) {
-        data.bannedUntil = now + 300000;
-        localStorage.setItem('ratelimit_data', JSON.stringify(data));
-        alert('This IP has been blocked from requesting for 5 minutes, I told you to stop!');
-        return true;
-    }
+    return res;
+};
 
-    localStorage.setItem('ratelimit_data', JSON.stringify(data));
-    return false;
-}
-
-// client rate limiting on this is kinda shitty.. 
-
-// !!!!!!!!!!!!!
-//TODO: make server rate limiting
+// replaced
+// btw server still blocks you this is just to tell you that you fucked up

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookup - HTTP Headers</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="theme-color" content="#714232">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HTTP headers">
+    <meta property="og:title" content="Lookup">
+    <meta property="og:description" content="Examine HTTP headers via my site">
+    <meta property="og:url" content="https://lookup.teaa.workers.dev/">
+    <meta property="og:image" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:secure_url" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="en_US">
+</head>
+<body class="theme-utdr">
+
+    <div id="box">
+        <div class="header-container">
+            <div>
+                <h1>Lookup - HTTP headers</h1>
+                <p id="subtitle"><a href="index.html" style="color: #ffe700;"><- Back to landing</a></p>
+                <p id="subtitle">View HTTP headers for any URL</p>
+            </div>
+        </div>
+
+        <div class="controls-wrapper" style="margin-top: 20px;">
+            <input type="text" id="headerSearchInput" class="search-bar" placeholder="Enter url (e.g. https://google.com)...">
+            <button id="headerSearchBtn" class="btn-action">Inspect</button>
+        </div>
+
+        <div id="resultContainer" style="margin-top: 20px;"></div>
+
+    </div>
+
+    <script src="js/rate_limiter.js"></script>
+    <script src="js/headers_handler.js"></script>
+    <script src="js/sfx.js"></script>
+</body>
+</html>

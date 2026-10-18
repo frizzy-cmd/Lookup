@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookup - Minecraft Server</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="theme-color" content="#714232">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Minecraft server">
+    <meta property="og:title" content="Lookup">
+    <meta property="og:description" content="Search a Minecraft server's address via the MCSRVSTAT API">
+    <meta property="og:url" content="https://lookup.teaa.workers.dev/">
+    <meta property="og:image" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:secure_url" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="en_US">
+</head>
+<body class="theme-utdr">
+
+    <div id="box">
+        <div class="header-container">
+            <div>
+                <h1>Lookup - Minecraft server</h1>
+                <p id="subtitle"><a href="index.html" style="color: #ffe700;"><- Back to landing</a></p>
+                <p id="subtitle">Insert a Minecraft server address to get the information provided by the MCSRVSTAT API</p>
+            </div>
+        </div>
+
+        <div class="controls-wrapper" style="margin-top: 20px;">
+            <input type="text" id="mcSearchInput" class="search-bar" placeholder="Enter server IP (e.g play.cubecraft.net)...">
+            <button id="mcSearchBtn" class="btn-action">Search</button>
+        </div>
+
+        <div id="resultContainer" style="margin-top: 20px;"></div>
+
+        <p style="text-align: center; margin-top: 40px; font-size: 9pt; color: #888;">
+            This tool supports both Java and Bedrock edition servers. If you keep encountering errors while searching for servers, it may be due to the MCSRVSTAT API or due to API rate limits, Or, the server you are searching for doesn't exist.
+        </p>
+    </div>
+
+    <script src="js/rate_limiter.js"></script>
+    <script src="js/minecraft_handler.js"></script>
+    <script src="js/sfx.js"></script>
+</body>
+</html>

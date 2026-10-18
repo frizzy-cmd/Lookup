@@ -1,3 +1,34 @@
+const rateLimitMap = new Map();
+const RATE_LIMIT_WINDOW = 60 * 1000; //60 sec
+const MAX_REQUESTS = 35;
+
+function isRateLimited(request) {
+    const clientIp = request.headers.get('CF-Connecting-IP') || '127.0.0.1';
+    const now = Date.now();
+
+    if (!rateLimitMap.has(clientIp)) {
+        rateLimitMap.set(clientIp, { count: 1, resetTime: now + RATE_LIMIT_WINDOW });
+        console.log(`Rate limit for IP: ${clientIp} .. count: 1`);
+        return false;
+    }
+
+    const data = rateLimitMap.get(clientIp);
+    if (now > data.resetTime) {
+        data.count = 1;
+        data.resetTime = now + RATE_LIMIT_WINDOW;
+        return false;
+    }
+
+    data.count++;
+    console.log(`IP: ${clientIp} request count: ${data.count}`);
+
+    if (data.count > MAX_REQUESTS) {
+        return true;
+    }
+
+    return false;
+}
+
 export default {
 async fetch(request, env, ctx) {
     const url = new URL(request.url);
@@ -10,6 +41,21 @@ async fetch(request, env, ctx) {
                 'Access-Control-Allow-Headers': 'Content-Type',
             }
         });
+    }
+    
+    // Rate limiterrrrrrrr
+    // isnetad of client site lol. old one was js/rate_limiter.js
+    if (url.pathname.startsWith('/api/')) {
+        if (isRateLimited(request)) {
+            return new Response(JSON.stringify({ error: 'Rate limit exceeded. Slow the hell down' }), {
+                status: 429,
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Retry-After': '60'
+                }
+            });
+        }
     }
 
     if (url.pathname.startsWith('/api/roblox/user/')) {
@@ -465,6 +511,155 @@ async fetch(request, env, ctx) {
             });
         } catch (err) {
             return new Response(JSON.stringify({ error: 'DNS lookup failed', details: err.message }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+    }
+    //
+    //
+    //
+    //
+    // MC SERVER
+    
+    if (url.pathname.startsWith('/api/minecraft/')) {
+        const query = decodeURIComponent(url.pathname.split('/').pop()).trim();
+        
+        if (!query) {
+            return new Response(JSON.stringify({ error: 'Invalid server address' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+
+        try {
+            const res = await fetch(`https://api.mcsrvstat.us/3/${encodeURIComponent(query)}`, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) LookupUtility/1.0'
+                }
+            });
+
+            if (!res.ok) {
+                return new Response(JSON.stringify({ error: 'Failed to reach Minecraft srv api', status: res.status }), {
+                    status: 502,
+                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+                });
+            }
+            const data = await res.json();
+
+            return new Response(JSON.stringify(data), {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'public, max-age=60'
+                }
+            });
+        } catch (err) {
+            return new Response(JSON.stringify({ error: 'Minecraft lookup failed', details: err.message }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+    }
+
+    // GITHUB USER
+    //
+    //
+    //
+    //
+
+    if (url.pathname.startsWith('/api/github/user/')) {
+        const username = decodeURIComponent(url.pathname.split('/').pop()).trim();
+        
+        if (!username) {
+            return new Response(JSON.stringify({ error: 'Invalid github username' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+
+        try {
+            const res = await fetch(`https://api.github.com/users/${encodeURIComponent(username)}`, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) LookupUtility/1.0'
+                }
+            });
+
+            if (!res.ok) {
+                return new Response(JSON.stringify({ error: 'Github user not found', status: res.status }), {
+                    status: res.status,
+                    headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+                });
+            }
+
+            const data = await res.json();
+
+            return new Response(JSON.stringify(data), {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'public, max-age=120'
+                }
+            });
+        } catch (err) {
+            return new Response(JSON.stringify({ error: 'Github lookup failed', details: err.message }), {
+                status: 500,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+    }
+
+    // HTTP VIEWER HTING
+    // 
+    //
+    //
+    //
+    //
+
+    if (url.pathname.startsWith('/api/headers')) {
+        const target = url.searchParams.get('url');
+        if (!target) {
+            return new Response(JSON.stringify({ error: 'Missing target url param' }), {
+                status: 400,
+                headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
+            });
+        }
+
+        try {
+            let fetchUrl = target;
+            if (!fetchUrl.startsWith('http://') && !fetchUrl.startsWith('https://')) {
+                fetchUrl = 'https://' + fetchUrl;
+            }
+
+            const res = await fetch(fetchUrl, {
+                method: 'GET',
+                redirect: 'follow',
+                headers: {
+                    'User-Agent': 'LookupUtility'
+                }
+            });
+
+            const headersObj = {};
+            for (const [key, value] of res.headers.entries()) {
+                headersObj[key] = value;
+            }
+
+            const payload = {
+                url: fetchUrl,
+                status: res.status,
+                statusText: res.statusText,
+                headers: headersObj
+            };
+
+            return new Response(JSON.stringify(payload), {
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    'Cache-Control': 'no-store'
+                }
+            });
+        } catch (err) {
+            return new Response(JSON.stringify({ error: 'Failed to fetch headers', details: err.message }), {
                 status: 500,
                 headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' }
             });

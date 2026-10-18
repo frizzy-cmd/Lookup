@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lookup - GitHub user</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/styles.css">
+    <meta name="theme-color" content="#714232">
+
+    <!-- Metatags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="GitHub user">
+    <meta property="og:title" content="Lookup">
+    <meta property="og:description" content="Search a GitHub user's profile via the GitHub API">
+    <meta property="og:url" content="https://lookup.teaa.workers.dev/">
+    <meta property="og:image" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:secure_url" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="en_US">
+</head>
+<body class="theme-utdr">
+
+    <div id="box">
+        <div class="header-container">
+            <div>
+                <h1>Lookup - GitHub user</h1>
+                <p id="subtitle"><a href="index.html" style="color: #ffe700;"><- Back to landing</a></p>
+                <p id="subtitle">Insert a GitHub username to get the information provided by the GitHub API</p>
+            </div>
+        </div>
+
+        <div class="controls-wrapper" style="margin-top: 20px;">
+            <input type="text" id="ghSearchInput" class="search-bar" placeholder="Enter GitHub username (e.g. frizzy-cmd)...">
+            <button id="ghSearchBtn" class="btn-action">Search</button>
+        </div>
+
+        <div id="resultContainer" style="margin-top: 20px;"></div>
+
+        <p style="text-align: center; margin-top: 40px; font-size: 9pt; color: #888;">
+            Notice: If you keep encountering errors while searching for users, it may be due to the GitHub API or due to API rate limits, Or, the user you are searching for doesn't exist.
+        </p>
+    </div>
+
+    <script src="js/rate_limiter.js"></script>
+    <script src="js/github_handler.js"></script>
+    <script src="js/sfx.js"></script>
+</body>
+</html>

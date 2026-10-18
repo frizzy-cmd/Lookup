@@ -6,7 +6,25 @@
     <title>Lookup - Landing</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/styles.css">
-    <meta name="theme-color" content="#000000">
+    <meta name="theme-color" content="#714232">
+
+    <!-- Metatags -->
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Landing">
+    <meta property="og:title" content="Lookup">
+    <meta property="og:description" content="A cool site where you can look stuff up via APIs (and for free!)">
+    <meta property="og:url" content="https://lookup.teaa.workers.dev/">
+    <meta property="og:image" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:secure_url" content="https://lookup.teaa.workers.dev/favicon.png">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:locale" content="en_US">
+    
+    <!-- alt -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:url" content="https://lookup.teaa.workers.dev/">
+    <meta name="twitter:title" content="Lookup">
+    <meta name="twitter:description" content="A cool site where you can look stuff up via APIs (and for free!)">
+    <meta name="twitter:image" content="https://lookup.teaa.workers.dev/favicon.png">
 </head>
 <body class="theme-utdr">
 
@@ -25,7 +43,7 @@
                 <div style="display: flex; flex-direction: column; gap: 8px;">
                     <a href="robloxuser.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
                         -> Roblox user lookup
-                        <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">Fetch profile info, avatars, badges, and account creation via the Roblox API</div>
+                        <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">View profile info, avatars, badges, and account creation via the Roblox API</div>
                     </a>
                     <a href="robloxgame.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
                         -> Roblox game lookup
@@ -35,9 +53,17 @@
                         -> Roblox group lookup
                         <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">View group data/info, member counts, and roles via the Roblox API</div>
                     </a>
+                    <a href="minecraftserver.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
+                        -> Minecraft server lookup
+                        <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">Check online status, player counts, motd, and versions of servers via the MCSRV API</div>
+                    </a>
                     <a href="discorduser.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
                         -> Discord user lookup
                         <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">View profile details, avatars, & others via the Discord API</div>
+                    </a>
+                    <a href="githubuser.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
+                        -> GitHub profile lookup
+                        <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">View general profile info & others via the GitHub API</div>
                     </a>
                 </div>
             </div>
@@ -48,6 +74,10 @@
                     <a href="ipdomain.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
                         -> IP & domain lookup
                         <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">Simple IP/domain lookup. Dont know how to explain it further!</div>
+                    </a>
+                    <a href="headers.html" class="btn-action" style="display: block; padding: 10px; text-decoration: none;">
+                        -> HTTP headers
+                        <div style="font-size: 8pt; color: #aaa; margin-top: 2px;">View HTTP headers for any URL</div>
                     </a>
                 </div>
             </div>
@@ -83,5 +113,6 @@
         </p>
     </div>
 
+    <script src="js/sfx.js"></script>
 </body>
 </html>
