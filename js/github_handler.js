@@ -52,7 +52,7 @@ if (ghSearchBtn) {
             document.getElementById('exportGhTxtBtn').addEventListener('click', () => {
                 if (!lastFetchedGhUser) return;
 
-                const txtContent = `--- Lookup [GitHub user] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [GitHub user] | Made by Maylan @ lookup.teaa.workers.dev ---
 Name: ${lastFetchedGhUser.name || 'n/a'}
 Username: ${lastFetchedGhUser.login}
 ID: ${lastFetchedGhUser.id}

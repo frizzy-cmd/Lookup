@@ -61,7 +61,7 @@ if (dcSearchBtn) {
             document.getElementById('exportDcTxtBtn').addEventListener('click', () => {
                 if (!lastFetchedDiscordUser) return;
                 
-                const txtContent = `--- Lookup [Discord user] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [Discord user] | Made by Maylan @ lookup.teaa.workers.dev ---
 Global name: ${u.globalName}
 Username: ${u.username}
 ID: ${u.id}

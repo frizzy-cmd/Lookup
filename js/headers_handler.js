@@ -53,7 +53,7 @@ if (headerSearchBtn) {
                     headersDump += `${k}: ${v}\n`;
                 }
 
-                const txtContent = `--- Lookup [HTTP headers] | Made by nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [HTTP headers] | Made by Maylan @ lookup.teaa.workers.dev ---
 URL: ${lastFetchedHeaders.url}
 Status: ${lastFetchedHeaders.status} ${lastFetchedHeaders.statusText}
 

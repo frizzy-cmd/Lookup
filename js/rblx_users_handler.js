@@ -143,7 +143,7 @@ if (searchBtn) {
                     ? lastFetchedUser.favoriteGames.map(f => ` - ${f.name || f.rootPlace?.name || 'Game #' + (f.id || f.rootPlaceId)}`).join('\n')
                     : ' Empty, or private';
 
-                const txtContent = `--- Lookup [Roblox user] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [Roblox user] | Made by Maylan @ lookup.teaa.workers.dev ---
 Username: ${lastFetchedUser.name} (${lastFetchedUser.displayName})
 ID: ${lastFetchedUser.id}
 Created: ${new Date(lastFetchedUser.created).toLocaleDateString()}

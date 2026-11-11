@@ -89,7 +89,7 @@ if (groupSearchBtn) {
                     ? lastFetchedGroup.roles.map(r => ` - ${r.name} (Rank: ${r.rank})`).join('\n')
                     : ' None';
 
-                const txtContent = `--- Lookup [Roblox group] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [Roblox group] | Made by Maylan @ lookup.teaa.workers.dev ---
 Name: ${lastFetchedGroup.name}
 Group ID: ${lastFetchedGroup.id}
 Owner: ${lastFetchedGroup.owner ? lastFetchedGroup.owner.username : 'Group Owned'}

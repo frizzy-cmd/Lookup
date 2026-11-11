@@ -91,7 +91,7 @@ if (osintSearchBtn) {
                 let txtContent = '';
                 if (lastFetchedData.type === 'ip') {
                     const d = lastFetchedData.data;
-                    txtContent = `--- Lookup [IP] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                    txtContent = `--- Lookup [IP] | Made by Maylan @ lookup.teaa.workers.dev ---
 IP: ${d.query}
 Country: ${d.country} (${d.countryCode})
 Region: ${d.regionName}
@@ -110,7 +110,7 @@ ASN: ${d.as}
                         recordsDump += recs.length > 0 ? recs.map(r => ` - ${r.data}`).join('\n') : ' None';
                         recordsDump += '\n';
                     }
-                    txtContent = `--- Lookup [Domain] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                    txtContent = `--- Lookup [Domain] | Made by Maylan @ lookup.teaa.workers.dev ---
 Domain: ${d.domain}
 ${recordsDump}
 ---------------------------`;

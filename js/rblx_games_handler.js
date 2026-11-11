@@ -55,7 +55,7 @@ if (gameSearchBtn) {
             document.getElementById('exportGameTxtBtn').addEventListener('click', () => {
                 if (!lastFetchedGame) return;
 
-                const txtContent = `--- Lookup [Roblox game] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [Roblox game] | Made by Maylan @ lookup.teaa.workers.dev ---
 Name: ${lastFetchedGame.name}
 Creator: ${lastFetchedGame.creator.name || lastFetchedGame.builder} (${lastFetchedGame.creator.type || 'User'})
 Place ID: ${lastFetchedGame.placeId}

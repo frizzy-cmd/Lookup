@@ -67,7 +67,7 @@ if (mcSearchBtn) {
             document.getElementById('exportMcTxtBtn').addEventListener('click', () => {
                 if (!lastFetchedMcData) return;
 
-                const txtContent = `--- Lookup [Minecraft server] | Made by Nightregion @ lookup.teaa.workers.dev ---
+                const txtContent = `--- Lookup [Minecraft server] | Made by Maylan @ lookup.teaa.workers.dev ---
 IP: ${lastFetchedMcData.ip}:${lastFetchedMcData.port || 25565}
 Status: Online
 Players: ${lastFetchedMcData.players?.online}/${lastFetchedMcData.players?.max}
